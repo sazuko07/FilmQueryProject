@@ -30,9 +30,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			//syntax for SQL works on SQL workbench, but not here for some reason
 			String sql = "SELECT title, description, release_year,  language_id, first_name, last_name "
 					+ "FROM film "
-					+ "JOIN film_actor"
-					+ "JOIN actor"
-					+ "WHERE title LIKE ? OR description LIKE ";
+					+ "INNER JOIN film_actor"
+					+ "INNER JOIN actor"
+					+ "WHERE title LIKE ? OR description LIKE ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps.setString(1,  "%" + title +"%");
