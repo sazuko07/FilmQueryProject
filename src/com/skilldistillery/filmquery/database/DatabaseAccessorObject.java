@@ -20,6 +20,38 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		e.printStackTrace();
 	}
   }
+  @Override
+  public Film findFilmByKeyword(String title, String description) throws SQLException {
+	  Film film = null; 
+		String name = "student";
+		String pwd = "student";
+	
+			Connection conn = DriverManager.getConnection(URL, name, pwd);
+			String sql = "SELECT * FROM film WHERE film.title LIKE ? OR film.description LIKE ?";
+			String wildcardPattern = "%";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(2,  "%" + title +"%");
+			ps.setString(3, "%" + description +"%");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+			    String title1 = rs.getString("title"); 
+			    String description1 = rs.getString("description");
+			    Integer releaseYear = rs.getInt("release_year");
+			    int languageId = rs.getInt("language_id");
+//			    int rentalDuration = rs.getInt("rental_duration");
+//			    double rentalRate = rs.getDouble("rental_rate");
+//			    int length = rs.getInt("length");
+//			    double replacementCost = rs.getDouble("replacement_cost");
+			    String rating = rs.getString("rating");
+//			    String specialFeatures = rs.getString("special_features");
+//				film = new Film(id, title1, description1, releaseYear, languageId, 
+//				rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures);
+			}
+			ps.close();
+			conn.close();
+	    return film;
+  }
   
   @Override
   public Film findFilmById(int filmId) throws SQLException {
@@ -35,18 +67,18 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			int id = rs.getInt("id");
-		    String title = rs.getString("title"); 
-		    String description = rs.getString("description");
+		    String title1 = rs.getString("title"); 
+		    String description1 = rs.getString("description");
 		    Integer releaseYear = rs.getInt("release_year");
 		    int languageId = rs.getInt("language_id");
-		    int rentalDuration = rs.getInt("rental_duration");
-		    double rentalRate = rs.getDouble("rental_rate");
-		    int length = rs.getInt("length");
-		    double replacementCost = rs.getDouble("replacement_cost");
+//		    int rentalDuration = rs.getInt("rental_duration");
+//		    double rentalRate = rs.getDouble("rental_rate");
+//		    int length = rs.getInt("length");
+//		    double replacementCost = rs.getDouble("replacement_cost");
 		    String rating = rs.getString("rating");
-		    String specialFeatures = rs.getString("special_features");
-			film = new Film(id, title, description, releaseYear, languageId, 
-			rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures);
+//		    String specialFeatures = rs.getString("special_features");
+//			film = new Film(id, title1, description1, releaseYear, languageId, 
+//			rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures);
 		}
 		ps.close();
 		conn.close();
