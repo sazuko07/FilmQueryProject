@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+
 
 import com.skilldistillery.filmqueryproject.entities.*;
 ;
@@ -20,6 +22,48 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		e.printStackTrace();
 	}
   }
+  @Override
+  public Actor createNewActor(Actor actor) {
+		Connection conn = null;
+		String name = "student";
+		String pwd = "student";
+		try {
+			conn = DriverManager.getConnection(URL, name, pwd);
+			conn.setAutoCommit(false);
+			String sql = "INSERT INTO actor (first_name, last_name, language_id) VALUES (?,?, 1)";
+			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			ps.setString(1, actor.getFirstName());
+			ps.setString(2, actor.getLastName());
+
+			int updateCount = ps.executeUpdate();
+
+			if (updateCount == 1) {
+				ResultSet keys = ps.getGeneratedKeys();
+				if (keys.next()) {
+					int newActorId = keys.getInt(1);
+					actor.setId(newActorId);
+				} else {
+					// something went wrong with the INSERT
+					actor = null;
+				}
+				conn.close();
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException sqle2) {
+					System.err.println("Error trying to rollback");
+				}
+			}
+			throw new RuntimeException("Error inserting actor " + actor);
+		}
+
+		return actor;
+  }
+
   @Override
   public Film findFilmByKeyword(String title) throws SQLException {
 	  Film film = null;
