@@ -28,15 +28,21 @@ public class FilmQueryApp {
 		Scanner scanner = new Scanner(System.in);
 		Film findFilmByKeyword = new Film("%");
 		Film findFilmById = new Film();
+		Film createNewFilm = new Film();
 
 		System.out.println("Hello, user! This program is designed to search our film database");
 		System.out.println(" in order to help you find the film you're looking for! you");
 		System.out.println(" can search by the film Id or a search keyword!");
 		System.out.println();
-		System.out.println("please choose among these 3 options: ");
+		System.out.println(" P.S.A. - We now have included a new feature: You can now");
+		System.out.println(" add a new film to the database! (instructions will be given");
+		System.out.println(" when you select the option from the menu)");
+		System.out.println();
+		System.out.println("please choose among these 4 options: ");
 		System.out.println("1. Search by ID");
 		System.out.println("2. Search by keyword");
-		System.out.println("3. exit program");
+		System.out.println("3. Add new film");
+		System.out.println("4. exit program");
 		System.out.println();
 		System.out.println("your choice: ");
 		userInputInt = scanner.nextInt();
@@ -52,6 +58,17 @@ public class FilmQueryApp {
 			searchByKeyword();
 			cont1nue();
 		} else if (userInputInt == 3) {
+			System.out.println("You can put a new film in the database, with");
+			System.out.println(" a title and movie description");
+			System.out.println();
+			System.out.println("please enter a title: ");
+			String title = scanner.nextLine();
+			scanner.nextLine();
+			System.out.println("please enter a description");
+			String description = scanner.nextLine();
+			scanner.nextLine();
+			userInput(title, description);
+		} else if (userInputInt == 4) {
 			System.out.println("Program will now exit");
 			System.exit(0);
 		}
@@ -59,6 +76,11 @@ public class FilmQueryApp {
 
 		scanner.close();
 	}
+
+	private void userInput(String title, String description) {
+	// TODO Auto-generated method stub
+	
+}
 
 	public void searchById() throws SQLException {
 
@@ -69,6 +91,9 @@ public class FilmQueryApp {
 	public void searchByKeyword() throws SQLException {
 		db.findFilmByKeyword(userInput);
 
+	}
+	public void addNewFilm() throws SQLException {
+		db.createNewFilm(userInput, userInput);
 	}
 
 	private void startUserInterface(Scanner input) {

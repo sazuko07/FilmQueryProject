@@ -23,29 +23,32 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
   }
   @Override
-  public Actor createNewActor(Actor actor) {
+  public Film createNewFilm(String title, String description) {
 		Connection conn = null;
-		String name = "student";
+		String name = "student";																																																																				
 		String pwd = "student";
 		try {
 			conn = DriverManager.getConnection(URL, name, pwd);
 			conn.setAutoCommit(false);
-			String sql = "INSERT INTO actor (first_name, last_name, language_id) VALUES (?,?, 1)";
+			String sql = "INSERT INTO film (title, description, language_id) VALUES (?,?,?)";
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			ps.setString(1, actor.getFirstName());
-			ps.setString(2, actor.getLastName());
+			
+			ps.setString(1, film.getDescription());
+			ps.setString(2, film.getDescription());
+			ps.setInt(3, 1);
 
 			int updateCount = ps.executeUpdate();
 
 			if (updateCount == 1) {
 				ResultSet keys = ps.getGeneratedKeys();
 				if (keys.next()) {
-					int newActorId = keys.getInt(1);
-					actor.setId(newActorId);
-				} else {
+					int newFilmId = keys.getInt(1);
+					film.setId(newFilmId);
+					System.out.println("You have successfully added a new film to the database!");
+				} else {														
 					// something went wrong with the INSERT
-					actor = null;
+					film = null;
 				}
 				conn.close();
 			}
@@ -58,10 +61,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 					System.err.println("Error trying to rollback");
 				}
 			}
-			throw new RuntimeException("Error inserting actor " + actor);
+			throw new RuntimeException("Error inserting film " + film);
 		}
 
-		return actor;
+		return film;
   }
 
   @Override
