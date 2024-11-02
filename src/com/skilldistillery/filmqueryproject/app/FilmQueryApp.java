@@ -68,6 +68,7 @@ public class FilmQueryApp {
 			String description = scanner.nextLine();
 			scanner.nextLine();
 			userInput(title, description);
+			addNewFilm();
 		} else if (userInputInt == 4) {
 			System.out.println("Program will now exit");
 			System.exit(0);
