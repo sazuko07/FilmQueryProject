@@ -40,6 +40,7 @@ public class FilmQueryApp {
 		System.out.println();
 		System.out.println("your choice: ");
 		userInputInt = scanner.nextInt();
+		scanner.nextLine();
 		if (userInputInt == 1) {
 			System.out.println("Please enter the film Id: ");
 			userInputInt = scanner.nextInt();

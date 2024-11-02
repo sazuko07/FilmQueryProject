@@ -28,15 +28,16 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	
 			Connection conn = DriverManager.getConnection(URL, name, pwd);
 			//syntax for SQL works on SQL workbench, but not here for some reason
-			String sql = "SELECT title, description, release_year,  language_id, first_name, last_name "
+			String sql = "SELECT film.id, title, description, release_year,  language_id, first_name, last_name "
 					+ "FROM film "
-					+ "INNER JOIN film_actor"
-					+ "INNER JOIN actor"
+					+ "JOIN film_actor ON film.id = film_actor.film_id "
+					+ "JOIN actor ON actor.id = film_actor.actor_id "
 					+ "WHERE title LIKE ? OR description LIKE ?";
+			System.out.println("query");
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			ps.setString(1,  "%" + title +"%");
-			ps.setString(2, "%" + title +"%");
+			ps.setString(1, "%" +title +"%");
+			ps.setString(2, "%" +title +"%");
 			ResultSet rs = ps.executeQuery();
 			System.out.println(rs);
 			while (rs.next()) {
@@ -45,12 +46,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			    String description1 = rs.getString("description");
 			    Integer releaseYear = rs.getInt("release_year");
 			    int languageId = rs.getInt("language_id");
-			    int rentalDuration = rs.getInt("rental_duration");
-			    double rentalRate = rs.getDouble("rental_rate");
-			    int length = rs.getInt("length");
-			    double replacementCost = rs.getDouble("replacement_cost");
-			    String rating = rs.getString("rating");
-			    String specialFeatures = rs.getString("special_features");
+//			    int rentalDuration = rs.getInt("rental_duration");
+//			    double rentalRate = rs.getDouble("rental_rate");
+//			    int length = rs.getInt("length");
+//			    double replacementCost = rs.getDouble("replacement_cost");
+//			    String rating = rs.getString("rating");
+//			    String specialFeatures = rs.getString("special_features");
 			    film = new Film(id, title1, description1, releaseYear, languageId/*, 
 				rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures*/);
 			    System.out.println(film);
