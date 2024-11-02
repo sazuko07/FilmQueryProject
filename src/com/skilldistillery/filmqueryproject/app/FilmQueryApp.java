@@ -64,7 +64,7 @@ public class FilmQueryApp {
 			System.out.println("please enter a title: ");
 			String title = scanner.nextLine();
 			scanner.nextLine();
-			System.out.println("please enter a description");
+			System.out.println("please enter a description: ");
 			String description = scanner.nextLine();
 			scanner.nextLine();
 			userInput(title, description);
