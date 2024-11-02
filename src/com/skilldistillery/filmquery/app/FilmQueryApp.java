@@ -16,7 +16,7 @@ public class FilmQueryApp {
 	public static void main(String[] args) throws SQLException {
 		FilmQueryApp app = new FilmQueryApp();
 //		app.test();
-    app.launch();
+		app.launch();
 	}
 
 //	private void test() throws SQLException {
@@ -26,11 +26,9 @@ public class FilmQueryApp {
 
 	private void launch() throws SQLException {
 		Scanner scanner = new Scanner(System.in);
-		Film findFilmByKeyword = new Film("%", "%");
+		Film findFilmByKeyword = new Film("%");
 		Film findFilmById = new Film();
-		
-		
-		
+
 		System.out.println("Hello, user! This program is designed to search our film database");
 		System.out.println(" in order to help you find the film you're looking for! you");
 		System.out.println(" can search by the film Id or a search keyword!");
@@ -46,22 +44,31 @@ public class FilmQueryApp {
 			System.out.println("Please enter the film Id: ");
 			userInputInt = scanner.nextInt();
 			searchById();
-		}
-		else if(userInputInt == 2) {
+
+		} else if (userInputInt == 2) {
 			System.out.println("Please enter your search term: ");
 			userInput = scanner.nextLine();
 			searchByKeyword();
+		} else if (userInputInt == 3) {
+			System.out.println("Program will now exit");
+			System.exit(0);
 		}
 //		startUserInterface(userInput);
 
 		scanner.close();
 	}
+
 	public void searchById() throws SQLException {
+
 		db.findFilmById(userInputInt);
+
 	}
+
 	public void searchByKeyword() throws SQLException {
-		db.findFilmByKeyword(userInput, userInput);
+		db.findFilmByKeyword(userInput);
+
 	}
+
 	private void startUserInterface(Scanner input) {
 
 	}

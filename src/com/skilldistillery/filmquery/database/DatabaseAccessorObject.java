@@ -21,7 +21,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
   }
   @Override
-  public Film findFilmByKeyword(String title, String description) throws SQLException {
+  public Film findFilmByKeyword(String title) throws SQLException {
 	  Film film = null; 
 		String name = "student";
 		String pwd = "student";
@@ -30,8 +30,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			String sql = "SELECT * FROM film WHERE film.title LIKE ? OR film.description LIKE ?";
 			String wildcardPattern = "%";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(2,  "%" + title +"%");
-			ps.setString(3, "%" + description +"%");
+			ps.setString(1,  "%" + title +"%");
+			ps.setString(2, "%" + title +"%");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				int id = rs.getInt("id");

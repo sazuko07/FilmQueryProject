@@ -24,10 +24,10 @@ public class Film {
 		this.id = id;
 	}
 
-	public Film(String title, String description) {
+	public Film(String title) {
 		super();
 		this.title = title;
-		this.description = description;
+		
 	}
 
 	public Film(int id, String title, int languageId) {
