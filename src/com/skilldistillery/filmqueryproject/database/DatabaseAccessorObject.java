@@ -34,7 +34,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			
-			ps.setString(1, film.getDescription());
+			ps.setString(1, film.getTitle());
 			ps.setString(2, film.getDescription());
 			ps.setInt(3, 1);
 
