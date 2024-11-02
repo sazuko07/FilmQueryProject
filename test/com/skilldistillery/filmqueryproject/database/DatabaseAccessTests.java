@@ -1,4 +1,4 @@
-package com.skilldistillery.filmquery.database;
+package com.skilldistillery.filmqueryproject.database;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,7 +10,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.skilldistillery.filmquery.entities.Film;
+import com.skilldistillery.filmqueryproject.database.DatabaseAccessor;
+import com.skilldistillery.filmqueryproject.database.DatabaseAccessorObject;
+import com.skilldistillery.filmqueryproject.entities.Film;
 
 class DatabaseAccessTests {
   private DatabaseAccessor db;

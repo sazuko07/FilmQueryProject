@@ -1,12 +1,12 @@
-package com.skilldistillery.filmquery.app;
+package com.skilldistillery.filmqueryproject.app;
 
 import java.sql.SQLException;
 
 import java.util.Scanner;
 
-import com.skilldistillery.filmquery.database.DatabaseAccessor;
-import com.skilldistillery.filmquery.database.DatabaseAccessorObject;
-import com.skilldistillery.filmquery.entities.Film;
+import com.skilldistillery.filmqueryproject.database.DatabaseAccessor;
+import com.skilldistillery.filmqueryproject.database.DatabaseAccessorObject;
+import com.skilldistillery.filmqueryproject.entities.Film;
 
 public class FilmQueryApp {
 	public String userInput = " ";
@@ -44,11 +44,12 @@ public class FilmQueryApp {
 			System.out.println("Please enter the film Id: ");
 			userInputInt = scanner.nextInt();
 			searchById();
-
+			cont1nue();
 		} else if (userInputInt == 2) {
 			System.out.println("Please enter your search term: ");
 			userInput = scanner.nextLine();
 			searchByKeyword();
+			cont1nue();
 		} else if (userInputInt == 3) {
 			System.out.println("Program will now exit");
 			System.exit(0);
@@ -72,5 +73,29 @@ public class FilmQueryApp {
 	private void startUserInterface(Scanner input) {
 
 	}
+	public void cont1nue() throws SQLException {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("what would you like to do next?");
+		System.out.println();
+		System.out.println("please choose among these 3 options: ");
+		System.out.println("1. Search by ID");
+		System.out.println("2. Search by keyword");
+		System.out.println("3. exit program");
+		System.out.println();
+		System.out.println("your choice: ");
+		userInputInt = scanner.nextInt();
+		if (userInputInt == 1) {
+			System.out.println("Please enter the film Id: ");
+			userInputInt = scanner.nextInt();
+			searchById();
 
+		} else if (userInputInt == 2) {
+			System.out.println("Please enter your search term: ");
+			userInput = scanner.nextLine();
+			searchByKeyword();
+		} else if (userInputInt == 3) {
+			System.out.println("Program will now exit");
+			System.exit(0);
+		}
+	}
 }

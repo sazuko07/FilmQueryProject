@@ -1,4 +1,4 @@
-package com.skilldistillery.filmquery.database;
+package com.skilldistillery.filmqueryproject.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.skilldistillery.filmquery.entities.*;
+import com.skilldistillery.filmqueryproject.entities.*;
 ;
 
 public class DatabaseAccessorObject implements DatabaseAccessor {
@@ -21,18 +21,24 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
   }
   @Override
-  public List<Film> findFilmByKeyword(String title) throws SQLException {
-	  List<Film> film = null; 
+  public Film findFilmByKeyword(String title) throws SQLException {
+	  Film film = null;
 		String name = "student";
 		String pwd = "student";
 	
 			Connection conn = DriverManager.getConnection(URL, name, pwd);
-			String sql = "SELECT * FROM film WHERE title LIKE '?' OR description LIKE '?'";
+			//syntax for SQL works on SQL workbench, but not here for some reason
+			String sql = "SELECT title, description, release_year,  language_id, first_name, last_name "
+					+ "FROM film "
+					+ "JOIN film_actor"
+					+ "JOIN actor"
+					+ "WHERE title LIKE ? OR description LIKE ";
 			PreparedStatement ps = conn.prepareStatement(sql);
-			System.out.println(ps);
+			
 			ps.setString(1,  "%" + title +"%");
 			ps.setString(2, "%" + title +"%");
 			ResultSet rs = ps.executeQuery();
+			System.out.println(rs);
 			while (rs.next()) {
 				int id = rs.getInt("id");
 			    String title1 = rs.getString("title"); 
@@ -40,13 +46,17 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			    Integer releaseYear = rs.getInt("release_year");
 			    int languageId = rs.getInt("language_id");
 			    int rentalDuration = rs.getInt("rental_duration");
-//			    double rentalRate = rs.getDouble("rental_rate");
-//			    int length = rs.getInt("length");
-//			    double replacementCost = rs.getDouble("replacement_cost");
+			    double rentalRate = rs.getDouble("rental_rate");
+			    int length = rs.getInt("length");
+			    double replacementCost = rs.getDouble("replacement_cost");
 			    String rating = rs.getString("rating");
-//			    String specialFeatures = rs.getString("special_features");
-//				film = new Film(id, title1, description1, releaseYear, languageId, 
-//				rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures);
+			    String specialFeatures = rs.getString("special_features");
+			    film = new Film(id, title1, description1, releaseYear, languageId/*, 
+				rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures*/);
+			    System.out.println(film);
+			    if (!rs.next()) {
+			    	System.out.println("your search doesnt match any film title or description");
+			    }
 			}
 			ps.close();
 			conn.close();
@@ -61,15 +71,16 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 		Connection conn = DriverManager.getConnection(URL, name, pwd);
 		String sql = "SELECT * FROM film WHERE id = ?";
-		
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ps.setInt(1,  filmId);
+		
 		ResultSet rs = ps.executeQuery();
-		System.out.println(ps);
+		
+		
 		while (rs.next()) {
 			int id = rs.getInt("id");
-		    String title1 = rs.getString("title"); 
-		    String description1 = rs.getString("description");
+		    String title = rs.getString("title"); 
+		    String description = rs.getString("description");
 		    Integer releaseYear = rs.getInt("release_year");
 		    int languageId = rs.getInt("language_id");
 		    int rentalDuration = rs.getInt("rental_duration");
@@ -78,8 +89,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		    double replacementCost = rs.getDouble("replacement_cost");
 		    String rating = rs.getString("rating");
 		    String specialFeatures = rs.getString("special_features");
-			film = new Film(id, title1, description1, releaseYear, languageId, 
-			rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures);
+			film = new Film(id, title, description, releaseYear, languageId
+			/*rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures*/);
+			System.out.println(film);
+			if (!rs.next()) {
+		    	System.out.println("your search doesnt match any film ID");
+		    }
 		}
 		ps
 		.close();

@@ -1,4 +1,4 @@
-package com.skilldistillery.filmquery.entities;
+package com.skilldistillery.filmqueryproject.entities;
 
 import java.util.Objects;
 
@@ -19,6 +19,15 @@ public class Film {
 		
 	}
 	
+	public Film(int id, String title, String description, Integer releaseYear, int languageId) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.releaseYear = releaseYear;
+		this.languageId = languageId;
+	}
+
 	public Film(int id) {
 		super();
 		this.id = id;
@@ -54,10 +63,10 @@ public class Film {
 	}
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
-				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
+		return "Film: id= " + id + ", title= " + title + ", description= " + description + ", releaseYear= " + releaseYear
+				+ ", languageId= " + languageId/* + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
 				+ ", length=" + length + ", replacementCost=" + replacementCost + ", rating=" + rating
-				+ ", specialFeatures=" + specialFeatures + "]";
+				+ ", specialFeatures=" + specialFeatures*/ ;
 	}
 	@Override
 	public int hashCode() {
