@@ -77,7 +77,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 		Connection conn = DriverManager.getConnection(URL, name, pwd);
 		
-		String sql = "SELECT film_id, title, description "
+		String sql = "SELECT title, description "
 				+ "FROM film "
 
 				+ "WHERE title LIKE ? OR description LIKE ?";
@@ -86,11 +86,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		
 		ps.setString(1, "%" + title + "%");
 		ps.setString(2, "%" + title + "%");
-		
+		System.out.println(ps);
 		ResultSet rs = ps.executeQuery();
 		
 		if (!rs.next()) {
 			System.out.println("your search doesnt match any film title or description");
+		
 		} else if ("language_id".equals(1)) {
 			System.out.println("This movie is in English");
 		}
