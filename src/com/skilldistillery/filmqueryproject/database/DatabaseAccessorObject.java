@@ -76,21 +76,25 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		String pwd = "student";
 
 		Connection conn = DriverManager.getConnection(URL, name, pwd);
-		// syntax for SQL works on SQL workbench, but not here for some reason
-		String sql = "SELECT film.id, title, description, release_year,  language_id " + "FROM film "
+		
+		String sql = "SELECT film_id, title, description "
+				+ "FROM film "
 
 				+ "WHERE title LIKE ? OR description LIKE ?";
 
 		PreparedStatement ps = conn.prepareStatement(sql);
-
+		
 		ps.setString(1, "%" + title + "%");
 		ps.setString(2, "%" + title + "%");
 		
 		ResultSet rs = ps.executeQuery();
-
+		
 		if (!rs.next()) {
 			System.out.println("your search doesnt match any film title or description");
-		} else {
+		} else if ("language_id".equals(1)) {
+			System.out.println("This movie is in English");
+		}
+		else {
 
 			while (rs.next()) {
 				int id = rs.getInt("id");
