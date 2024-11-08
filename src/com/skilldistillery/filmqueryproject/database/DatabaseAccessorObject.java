@@ -72,7 +72,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 	@Override
 	public List<Film> findFilmByKeyword(String title) throws SQLException {
-		List<Film> films = new ArrayList<>(); /* this is the line that screws up the result set */
+		List<Film> films = new ArrayList<>(); 
 		String name = "student";
 		String pwd = "student";
 
