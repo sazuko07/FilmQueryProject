@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.skilldistillery.filmqueryproject.entities.*;;
@@ -70,57 +71,50 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public Film findFilmByKeyword(String title) throws SQLException {
-		Film film = null;
+	public List<Film> findFilmByKeyword(String title) throws SQLException {
+		List<Film> films = new ArrayList<>(); /* this is the line that screws up the result set */
 		String name = "student";
 		String pwd = "student";
 
 		Connection conn = DriverManager.getConnection(URL, name, pwd);
-		
-		String sql = "SELECT title, description "
-				+ "FROM film "
+
+		String sql = "SELECT * " + "FROM film "
 
 				+ "WHERE title LIKE ? OR description LIKE ?";
 
 		PreparedStatement ps = conn.prepareStatement(sql);
-		
+
 		ps.setString(1, "%" + title + "%");
 		ps.setString(2, "%" + title + "%");
-		System.out.println(ps);
-		ResultSet rs = ps.executeQuery();
-		
-		if (!rs.next()) {
-			System.out.println("your search doesnt match any film title or description");
-		
-		} else if ("language_id".equals(1)) {
-			System.out.println("This movie is in English");
-		}
-		else {
 
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				String title1 = rs.getString("title");
-				String description1 = rs.getString("description");
-				Integer releaseYear = rs.getInt("release_year");
-				int languageId = rs.getInt("language_id");
+		ResultSet rs = ps.executeQuery();
+		System.out.println(films);
+
+		while (rs.next()) {
+			int id = rs.getInt("id");
+			String title1 = rs.getString("title");
+			String description1 = rs.getString("description");
+			Integer releaseYear = rs.getInt("release_year");
+			int languageId = rs.getInt("language_id");
 //			    int rentalDuration = rs.getInt("rental_duration");
 //			    double rentalRate = rs.getDouble("rental_rate");
 //			    int length = rs.getInt("length");
 //			    double replacementCost = rs.getDouble("replacement_cost");
 //			    String rating = rs.getString("rating");
 //			    String specialFeatures = rs.getString("special_features");
-				film = new Film(id, title1, description1, releaseYear,
-						languageId/*
-									 * , rentalDuration, rentalRate, length, replacementCost, rating,
-									 * specialFeatures
-									 */);
-				System.out.println(film);
+			films.add(new Film(id, title1, description1, releaseYear,
+					languageId/*
+								 * , rentalDuration, rentalRate, length, replacementCost, rating,
+								 * specialFeatures
+								 */));
+			System.out.println(films);
 
-			}
 		}
-		ps.close();
-		conn.close();
-		return film;
+	
+
+	 ps.close();
+	 conn.close();
+	 return films;
 	}
 
 	@Override

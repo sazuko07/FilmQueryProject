@@ -1,7 +1,7 @@
 package com.skilldistillery.filmqueryproject.app;
 import com.skilldistillery.filmqueryproject.entities.*;
 import java.sql.SQLException;
-
+import java.util.List;
 import java.util.Scanner;
 
 import com.skilldistillery.filmqueryproject.database.DatabaseAccessor;
@@ -51,12 +51,14 @@ public class FilmQueryApp {
 		if (userInputInt == 1) {
 			System.out.println("Please enter the film Id: ");
 			userInputInt = scanner.nextInt();
-			searchById();
+			Film film = searchById();
+			System.out.println(film);
 			displayMenu();
 		} else if (userInputInt == 2) {
 			System.out.println("Please enter your search term: ");
 			userInput = scanner.next();
-			searchByKeyword();
+			List<Film> films = searchByKeyword();
+			System.out.println(films);
 			displayMenu();
 		} else if (userInputInt == 3) {
 			System.out.println("You can put a new film in the database, with");
@@ -81,15 +83,14 @@ public class FilmQueryApp {
 
 
 
-	public void searchById() throws SQLException {
-
-		db.findFilmById(userInputInt);
-
+	public Film searchById() throws SQLException {
+		Film newFilm = db.findFilmById(userInputInt);
+		return newFilm;
 	}
 
-	public void searchByKeyword() throws SQLException {
-		db.findFilmByKeyword(userInput);
-
+	public List<Film> searchByKeyword() throws SQLException {
+		List<Film> films = db.findFilmByKeyword(userInput);
+		return films;
 	}
 
 
