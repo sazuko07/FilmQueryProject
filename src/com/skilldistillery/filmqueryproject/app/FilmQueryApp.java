@@ -58,7 +58,6 @@ public class FilmQueryApp {
 			System.out.println("Please enter your search term: ");
 			userInput = scanner.next();
 			List<Film> films = searchByKeyword();
-			System.out.println(films);
 			displayMenu();
 		} else if (userInputInt == 3) {
 			System.out.println("You can put a new film in the database, with");
